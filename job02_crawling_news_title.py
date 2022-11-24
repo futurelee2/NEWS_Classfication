@@ -51,3 +51,4 @@ for i in range(0,6): #section
                             index = False)
             titles = [] #중복되지 않게
 
+
