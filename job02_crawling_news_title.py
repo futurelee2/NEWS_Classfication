@@ -22,9 +22,9 @@ df_title = pd.DataFrame()
 #'//*[@id="section_body"]/ul[1]/li[2]/dl/dt[2]/a'
 #'//*[@id="section_body"]/ul[2]/li[1]/dl/dt[2]/a' #li[5] 넘어가면 [1]로바뀜
 
-for i in range(0,6): #section
+for i in range(4,6): #section
     titles = []
-    for j in range(1,11): # 페이지page[i]
+    for j in range(1,pages[i]): # 페이지page[i]
         url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}#&date=%2000:00:00&page={}'.format(i,j)
         driver.get(url)
         time.sleep(0.2)  # 0.2초안 띄워져있다가 꺼짐
@@ -34,15 +34,15 @@ for i in range(0,6): #section
                 x_path = '//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt[2]/a'.format(k,l)
                 try:
                     title = driver.find_element('xpath', x_path).text
-                    title = re.compile('[^가-힣]').sub('',title)
+                    title = re.compile('[^가-힣 ]').sub('',title)
                     titles.append(title)
                 except NoSuchElementException as e:
                     x_path = '//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt/a'.format(k,l)
                     title = driver.find_element('xpath', x_path).text
-                    title = re.compile('[^가-힣]').sub('',title)
+                    title = re.compile('[^가-힣 ]').sub('',title)
                     titles.append(title)
                 except:
-                    print('error')
+                    print('error', i, j, k, l)
         if j % 10 == 0: #10페이지마다 저장
             df_section_title = pd.DataFrame(titles, columns=['title'])
             df_section_title['category'] = category[i]
