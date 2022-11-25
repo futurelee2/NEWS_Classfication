@@ -9,7 +9,7 @@ import numpy as np
 category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'} #딕셔너리 형태로 적어야함
-#headers 내용: 서버 페이지> 오른쪽마우슨 검사> network> name 에 아무거나 클릭하면 맨 밑에 Request Headers 에 User-Agent
+#headers 내용: 서버 페이지> 오른쪽마우스 검사> network> name 에 아무거나 클릭하면 맨 밑에 Request Headers 에 User-Agent
 
 df_titles = pd.DataFrame()
 for i in range(6):
@@ -25,7 +25,7 @@ for i in range(6):
         title = title_tag.text
         title = re.compile('[^가-힣0-9a-zA-Z ]').sub(' ',title) #^반전 / ^A-Z 빼고 전부다/A-Z 빼라 > sub '' 대신 이걸 넣어라/ # ^가-힣: 한글
         titles.append(title) #실제 사람들이 쓰는 말: 자연어
-    df_section_titles = pd.DataFrame(titles, columns=['titles'])
+    df_section_titles = pd.DataFrame(titles, columns=['title'])
     df_section_titles['category'] = category[i]
     df_titles = pd.concat([df_titles, df_section_titles], axis='rows',ignore_index=True) #인덱스 무시
 print(df_titles)
