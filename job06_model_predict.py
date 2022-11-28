@@ -8,13 +8,16 @@ from sklearn.preprocessing import LabelEncoder
 from keras.utils import to_categorical
 import pickle
 from keras.models import load_model
+pd.set_option('display.unicode.east_asian_width', True) #어느정도 줄맞춰줌
+pd.set_option('display.max_columns',15)
 
-df = pd.read_csv('./crawling_data/naver_headline_news_20221125.csv')
+df = pd.read_csv('./crawling_data/naver_headline_news_20221128.csv')
 print(df.head())
 df.info()
 
 X = df['title']
 Y = df['category']
+#token/encoder 은 이전에 학습 했던 것 그대로 사용하기 위해 저장
 
 with open('./models/label_encoder.pickle','rb') as f:
     encoder = pickle.load(f)
@@ -36,9 +39,10 @@ with open('./models/news_token.pickle', 'rb') as f:
     token = pickle.load(f)
 tokened_X = token.texts_to_sequences(X)
 for i in range(len(tokened_X)):
-    if len(tokened_X[i]) > 20:
+    if len(tokened_X[i]) > 20: #형태소 젤 긴게 20이라서
         tokened_X[i] = tokened_X[i][:20] #형태소 20개보다 많으면 잘라버림 (20개만 슬라이싱)
 X_pad = pad_sequences(tokened_X, 20)
+# 이전에 학습한 형태소가 아니면 0으로 반환(모르는값)
 
 model = load_model('./models/new_category_classfication_model_0.992.h5')
 preds = model.predict(X_pad)
@@ -48,5 +52,14 @@ for pred in preds:
     category_pred = label[np.argmax(pred)]
     category_preds.append(category_pred)
 df['predict'] = category_preds
-print(df.head(30))
 
+
+
+df['OX'] = False
+for i in range(len(df)):
+    if df.loc[i, 'category'] == df.loc[i,'predict']:
+        df.loc[i,'OX'] = True
+print(df.head(30))
+print(df['OX'].value_counts())
+print(df['OX'].mean())
+print(df.loc[df['OX']==False])

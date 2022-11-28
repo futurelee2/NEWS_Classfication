@@ -17,6 +17,8 @@ options.add_argument('lang=kr_KR')
 driver = webdriver.Chrome('./chromedriver',options=options) #driver : 크롬브라우져 띄움
 df_title = pd.DataFrame()
 
+
+#주소가 명확해서 for문 가능
 #x_path =
 #'//*[@id="section_body"]/ul[1]/li[1]/dl/dt[2]/a'
 #'//*[@id="section_body"]/ul[1]/li[2]/dl/dt[2]/a'

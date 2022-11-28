@@ -9,16 +9,17 @@ print(X_train.shape, Y_train.shape)
 print(X_test.shape, Y_test.shape)
 
 model = Sequential()
-model.add(Embedding(12063,300,input_length=20)) #단어의 개수 =12063 차원/ 12063차원을 300차원으로 줄인다(=벡터라이징)
-model.add(Conv1D(32,kernel_size=5,padding='same',activation='relu'))
+model.add(Embedding(12063,300,input_length=20))
+#단어의 개수 =12063 차원만큼의 의미공간상의 좌표를 가짐> embedding / 12063차원을 300차원으로 줄인다(=벡터라이징)
+model.add(Conv1D(32,kernel_size=5,padding='same',activation='relu')) #1차원 (행 없음) 1열/ 2차원 (행/열 있음) 이미지
 model.add(MaxPool1D(pool_size=1)) #달라지는 것 어음
-model.add(GRU(128,activation='tanh',return_sequences=True))
+model.add(GRU(128,activation='tanh',return_sequences=True)) # 계산 할 때마다 나온 값을 저장해서 줌 =T / 마지막 답 한개만 넘겨 줄 경우 = F
 model.add(Dropout(0.3))
 model.add(GRU(64,activation='tanh',return_sequences=True))
 model.add(Dropout(0.3))
 model.add(GRU(64,activation='tanh'))
 model.add(Dropout(0.3))
-model.add(Flatten())
+model.add(Flatten()) # T/F 상관없이 적음
 model.add(Dense(128,activation='relu'))
 model.add(Dense(6,activation='softmax'))
 model.summary()

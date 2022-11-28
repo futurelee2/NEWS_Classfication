@@ -14,7 +14,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 df_titles = pd.DataFrame()
 for i in range(6):
     url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}'.format(i)
-    resp = requests.get(url,headers=headers) #서버한테 무엇을 요청하고 응답을 resp 로 받음
+    resp = requests.get(url,headers=headers) #서버한테 무엇을 요청하고 응답을 resp(응답 클래스 객체) 로 받음
+    print(type(resp))
     # print(list(resp)) #rnrnrn (줄바꿈&커서 맨앞)이 화면상에서 생략됨
     soup = BeautifulSoup(resp.text, 'html.parser') #뷰티풀 숩: html 문서형태로 바꿔줌
     # print(soup)

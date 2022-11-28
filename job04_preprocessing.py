@@ -36,7 +36,7 @@ with open('./models/label_encoder.pickle','wb') as f: #encoder 저장
 onehot_Y = to_categorical(labeled_Y)
 print(onehot_Y[:5])
 
-okt = Okt() #형태소 단위로 잘라주기
+okt = Okt() #형태소(의미를 가진 가장 작은 최소단위) 단위로 잘라주기
 
 for i in range(len(X)):
     X[i] = okt.morphs(X[i], stem=True)  # stem :  동사원형으로 바꿔줌 ex) 찾니 > 찾다
