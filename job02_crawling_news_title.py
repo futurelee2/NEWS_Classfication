@@ -5,7 +5,8 @@ import re
 import pandas as pd
 import datetime
 
-#chromdriver 다운받기 (chrom 버전 확인: 도움말>크롬정보에서 확인)
+#chromdriver 다운받기
+# (chrom 버전 확인: 도움말>크롬정보에서 확인)
 category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
 # pages = [167,377,505,71,94,73] #데이터의 불균형 맞춰주기: 적은것 늘려서 중복데이터만들기 or 많은 것을 줄이기
 pages = [101,101,101,71,94,73] #적은카테고리의 마지막엔 자료가 다 없을 수 있어서 마지막 페이지 빼줘야함 + range 범위설정할때 1 더해야함
